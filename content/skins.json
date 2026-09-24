@@ -1,0 +1,14 @@
+{
+  "skins": [
+    { "id": "lime", "name": "Glow Lime", "price": 0 },
+    { "id": "cyan", "name": "Electric Cyan", "price": 50 },
+    { "id": "magenta", "name": "Hot Magenta", "price": 100 },
+    { "id": "gold", "name": "Sun Gold", "price": 250 },
+    { "id": "ice", "name": "Ice Glass", "price": 250 },
+    { "id": "ember", "name": "Ember", "price": 400 },
+    { "id": "honey", "name": "Honey", "price": 300 },
+    { "id": "mint", "name": "Mint Crystal", "price": 350 },
+    { "id": "void", "name": "Void", "price": 600 },
+    { "id": "rainbow", "name": "Prism", "price": 1200, "iap": true }
+  ]
+}

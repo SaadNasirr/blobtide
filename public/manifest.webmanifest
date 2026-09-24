@@ -1,0 +1,17 @@
+{
+  "name": "Blobtide",
+  "short_name": "Blobtide",
+  "description": "One-thumb crowd runner. Swerve, multiply, smash.",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a1458",
+  "theme_color": "#2b1f78",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

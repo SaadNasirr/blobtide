@@ -1,0 +1,2789 @@
+{
+  "version": 1,
+  "levels": [
+    {
+      "id": 1,
+      "startCount": 3,
+      "pieces": [
+        {
+          "z": 14,
+          "type": "gate",
+          "op": "add",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 26,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 40,
+          "type": "finish",
+          "hp": 8
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "startCount": 4,
+      "pieces": [
+        {
+          "z": 16,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 32,
+          "type": "finish",
+          "hp": 8
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "startCount": 6,
+      "pieces": [
+        {
+          "z": 14,
+          "type": "gate",
+          "op": "add",
+          "value": 5,
+          "x": 0
+        },
+        {
+          "z": 24,
+          "type": "saw",
+          "x": 0.8,
+          "damage": 4,
+          "width": 1.4
+        },
+        {
+          "z": 38,
+          "type": "finish",
+          "hp": 8
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "startCount": 5,
+      "pieces": [
+        {
+          "z": 16,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 8
+          }
+        },
+        {
+          "z": 32,
+          "type": "finish",
+          "hp": 14
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "startCount": 8,
+      "pieces": [
+        {
+          "z": 14,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 22,
+          "type": "hole",
+          "x": -1.6,
+          "width": 2
+        },
+        {
+          "z": 30,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 44,
+          "type": "finish",
+          "hp": 20
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "startCount": 10,
+      "pieces": [
+        {
+          "z": 14,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 6
+          },
+          "right": {
+            "op": "sub",
+            "value": 3
+          }
+        },
+        {
+          "z": 24,
+          "type": "saw",
+          "x": -0.9,
+          "damage": 5,
+          "width": 1.4
+        },
+        {
+          "z": 34,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 48,
+          "type": "finish",
+          "hp": 22
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "startCount": 7,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 22,
+          "type": "wall",
+          "x": 1.4,
+          "width": 1.3,
+          "damage": 3
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "add",
+          "value": 5,
+          "x": 0
+        },
+        {
+          "z": 46,
+          "type": "finish",
+          "hp": 24
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "startCount": 12,
+      "pieces": [
+        {
+          "z": 14,
+          "type": "dualgate",
+          "left": {
+            "op": "div",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 26,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 36,
+          "type": "saw",
+          "x": 0,
+          "damage": 6,
+          "width": 1.4
+        },
+        {
+          "z": 50,
+          "type": "finish",
+          "hp": 20
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "startCount": 6,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 21,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 5
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 30,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 39,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 56,
+          "type": "finish",
+          "hp": 56
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "startCount": 6,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 22,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 32,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 42,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 52,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 70,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "startCount": 6,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 23,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 34,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 6,
+          "width": 1.6
+        },
+        {
+          "z": 45,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 6,
+          "width": 1.6
+        },
+        {
+          "z": 56,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 67,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 86,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "startCount": 7,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 7,
+          "width": 1.3
+        },
+        {
+          "z": 21,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 30,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 47,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "startCount": 7,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 8,
+          "x": 0
+        },
+        {
+          "z": 22,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 32,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 42,
+          "type": "gate",
+          "op": "add",
+          "value": 5,
+          "x": 0
+        },
+        {
+          "z": 52,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 70,
+          "type": "finish",
+          "hp": 9
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "startCount": 7,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 23,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 34,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 45,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 9,
+          "width": 1.6
+        },
+        {
+          "z": 56,
+          "type": "gate",
+          "op": "add",
+          "value": 6,
+          "x": 0
+        },
+        {
+          "z": 66,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 9,
+          "width": 1.6
+        },
+        {
+          "z": 85,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "startCount": 7,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 10,
+          "width": 1.3
+        },
+        {
+          "z": 21,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 10,
+          "width": 1.3
+        },
+        {
+          "z": 30,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 39,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 48,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 57,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 67,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 8
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 84,
+          "type": "finish",
+          "hp": 8
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "startCount": 7,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 22,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "add",
+          "value": 8,
+          "x": 0
+        },
+        {
+          "z": 42,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 6
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 60,
+          "type": "finish",
+          "hp": 35
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "startCount": 7,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 4
+        },
+        {
+          "z": 23,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 4
+        },
+        {
+          "z": 34,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 45,
+          "type": "gate",
+          "op": "add",
+          "value": 9,
+          "x": 0
+        },
+        {
+          "z": 55,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 74,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "startCount": 8,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 21,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 5,
+          "width": 1.3
+        },
+        {
+          "z": 30,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 5,
+          "width": 1.3
+        },
+        {
+          "z": 39,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 48,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 58,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 75,
+          "type": "finish",
+          "hp": 6
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "startCount": 8,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 7,
+          "x": 0
+        },
+        {
+          "z": 22,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 8
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 42,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 52,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 62,
+          "type": "gate",
+          "op": "add",
+          "value": 5,
+          "x": 0
+        },
+        {
+          "z": 72,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 90,
+          "type": "finish",
+          "hp": 150
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "startCount": 8,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 23,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 34,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 44,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 63,
+          "type": "finish",
+          "hp": 10
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "startCount": 8,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 21,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 30,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 8,
+          "width": 1.3
+        },
+        {
+          "z": 39,
+          "type": "gate",
+          "op": "add",
+          "value": 7,
+          "x": 0
+        },
+        {
+          "z": 49,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 8,
+          "width": 1.3
+        },
+        {
+          "z": 66,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "startCount": 8,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 9,
+          "width": 1.45
+        },
+        {
+          "z": 22,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 32,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 5
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 42,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 52,
+          "type": "gate",
+          "op": "add",
+          "value": 8,
+          "x": 0
+        },
+        {
+          "z": 62,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 7
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 80,
+          "type": "finish",
+          "hp": 14
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "startCount": 8,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 23,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 5
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 34,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 45,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 56,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 67,
+          "type": "gate",
+          "op": "add",
+          "value": 9,
+          "x": 0
+        },
+        {
+          "z": 77,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 96,
+          "type": "finish",
+          "hp": 5
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "startCount": 9,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 21,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 30,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 40,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 57,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "startCount": 9,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 4,
+          "width": 1.45
+        },
+        {
+          "z": 22,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 4,
+          "width": 1.45
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 42,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 52,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 70,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "startCount": 9,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 23,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 34,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 45,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 3
+        },
+        {
+          "z": 56,
+          "type": "gate",
+          "op": "add",
+          "value": 6,
+          "x": 0
+        },
+        {
+          "z": 66,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 3
+        },
+        {
+          "z": 85,
+          "type": "finish",
+          "hp": 55
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "startCount": 9,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 4
+        },
+        {
+          "z": 21,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 4
+        },
+        {
+          "z": 30,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 39,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 48,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 6,
+          "width": 1.3
+        },
+        {
+          "z": 57,
+          "type": "gate",
+          "op": "add",
+          "value": 7,
+          "x": 0
+        },
+        {
+          "z": 67,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 6,
+          "width": 1.3
+        },
+        {
+          "z": 84,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "startCount": 9,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 22,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 7,
+          "width": 1.45
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "add",
+          "value": 8,
+          "x": 0
+        },
+        {
+          "z": 42,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 7,
+          "width": 1.45
+        },
+        {
+          "z": 60,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "startCount": 9,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 23,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 34,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 45,
+          "type": "gate",
+          "op": "add",
+          "value": 9,
+          "x": 0
+        },
+        {
+          "z": 55,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 74,
+          "type": "finish",
+          "hp": 141
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "startCount": 10,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 21,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 30,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 39,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 48,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 58,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 75,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "startCount": 10,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 22,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 32,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 10,
+          "width": 1.45
+        },
+        {
+          "z": 42,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 10,
+          "width": 1.45
+        },
+        {
+          "z": 52,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 62,
+          "type": "gate",
+          "op": "add",
+          "value": 5,
+          "x": 0
+        },
+        {
+          "z": 72,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 90,
+          "type": "finish",
+          "hp": 6
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "startCount": 10,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 3,
+          "width": 1.6
+        },
+        {
+          "z": 23,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 34,
+          "type": "gate",
+          "op": "add",
+          "value": 6,
+          "x": 0
+        },
+        {
+          "z": 44,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 8
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 63,
+          "type": "finish",
+          "hp": 19
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "startCount": 10,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 7,
+          "x": 0
+        },
+        {
+          "z": 21,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 8
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 30,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 39,
+          "type": "gate",
+          "op": "add",
+          "value": 7,
+          "x": 0
+        },
+        {
+          "z": 49,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 66,
+          "type": "finish",
+          "hp": 16
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "startCount": 10,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 22,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 32,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 42,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 5,
+          "width": 1.45
+        },
+        {
+          "z": 52,
+          "type": "gate",
+          "op": "add",
+          "value": 8,
+          "x": 0
+        },
+        {
+          "z": 62,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 5,
+          "width": 1.45
+        },
+        {
+          "z": 80,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "startCount": 10,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 6,
+          "width": 1.6
+        },
+        {
+          "z": 23,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 6,
+          "width": 1.6
+        },
+        {
+          "z": 34,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 45,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 56,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 67,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 77,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 7
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 96,
+          "type": "finish",
+          "hp": 7
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "startCount": 11,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 21,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 30,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 40,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 5
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 57,
+          "type": "finish",
+          "hp": 31
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "startCount": 11,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 4
+        },
+        {
+          "z": 22,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 4
+        },
+        {
+          "z": 32,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 42,
+          "type": "gate",
+          "op": "add",
+          "value": 5,
+          "x": 0
+        },
+        {
+          "z": 52,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 70,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "startCount": 11,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 23,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 9,
+          "width": 1.6
+        },
+        {
+          "z": 34,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 9,
+          "width": 1.6
+        },
+        {
+          "z": 45,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 56,
+          "type": "gate",
+          "op": "add",
+          "value": 6,
+          "x": 0
+        },
+        {
+          "z": 66,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 85,
+          "type": "finish",
+          "hp": 7
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "startCount": 11,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 6,
+          "x": 0
+        },
+        {
+          "z": 21,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 7
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 30,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 39,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 48,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 57,
+          "type": "gate",
+          "op": "add",
+          "value": 7,
+          "x": 0
+        },
+        {
+          "z": 67,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 84,
+          "type": "finish",
+          "hp": 98
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "startCount": 11,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 22,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 42,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 60,
+          "type": "finish",
+          "hp": 9
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "startCount": 11,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 23,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 34,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 4,
+          "width": 1.6
+        },
+        {
+          "z": 45,
+          "type": "gate",
+          "op": "add",
+          "value": 9,
+          "x": 0
+        },
+        {
+          "z": 55,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 4,
+          "width": 1.6
+        },
+        {
+          "z": 74,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "startCount": 12,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 5,
+          "width": 1.3
+        },
+        {
+          "z": 21,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 30,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 39,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 48,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 58,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 6
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 75,
+          "type": "finish",
+          "hp": 26
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "startCount": 12,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 22,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 32,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 42,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 52,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 62,
+          "type": "gate",
+          "op": "add",
+          "value": 5,
+          "x": 0
+        },
+        {
+          "z": 72,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 90,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "startCount": 12,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 23,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 34,
+          "type": "gate",
+          "op": "add",
+          "value": 6,
+          "x": 0
+        },
+        {
+          "z": 44,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 63,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "startCount": 12,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 8,
+          "width": 1.3
+        },
+        {
+          "z": 21,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 8,
+          "width": 1.3
+        },
+        {
+          "z": 30,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 39,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 49,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 66,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "startCount": 12,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 22,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 32,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 8
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 42,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 3
+        },
+        {
+          "z": 52,
+          "type": "gate",
+          "op": "add",
+          "value": 8,
+          "x": 0
+        },
+        {
+          "z": 62,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 3
+        },
+        {
+          "z": 80,
+          "type": "finish",
+          "hp": 58
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "startCount": 12,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 4
+        },
+        {
+          "z": 23,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 4
+        },
+        {
+          "z": 34,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 45,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 56,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 10,
+          "width": 1.6
+        },
+        {
+          "z": 67,
+          "type": "gate",
+          "op": "add",
+          "value": 9,
+          "x": 0
+        },
+        {
+          "z": 77,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 10,
+          "width": 1.6
+        },
+        {
+          "z": 96,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "startCount": 13,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 21,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 3,
+          "width": 1.3
+        },
+        {
+          "z": 30,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 40,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 3,
+          "width": 1.3
+        },
+        {
+          "z": 57,
+          "type": "finish",
+          "hp": 5
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "startCount": 13,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 22,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 42,
+          "type": "gate",
+          "op": "add",
+          "value": 5,
+          "x": 0
+        },
+        {
+          "z": 52,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 70,
+          "type": "finish",
+          "hp": 107
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "startCount": 13,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 23,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 34,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 2
+        },
+        {
+          "z": 45,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 56,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 66,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 85,
+          "type": "finish",
+          "hp": 6
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "startCount": 13,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 21,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 30,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 6,
+          "width": 1.3
+        },
+        {
+          "z": 39,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 6,
+          "width": 1.3
+        },
+        {
+          "z": 48,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 57,
+          "type": "gate",
+          "op": "add",
+          "value": 7,
+          "x": 0
+        },
+        {
+          "z": 67,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 2
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 84,
+          "type": "finish",
+          "hp": 7
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "startCount": 13,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 7,
+          "width": 1.45
+        },
+        {
+          "z": 22,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "add",
+          "value": 8,
+          "x": 0
+        },
+        {
+          "z": 42,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 7
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 60,
+          "type": "finish",
+          "hp": 18
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "startCount": 13,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "gate",
+          "op": "add",
+          "value": 6,
+          "x": 0
+        },
+        {
+          "z": 23,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 7
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 34,
+          "type": "wall",
+          "x": 1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 45,
+          "type": "gate",
+          "op": "add",
+          "value": 9,
+          "x": 0
+        },
+        {
+          "z": 55,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 5
+        },
+        {
+          "z": 74,
+          "type": "finish",
+          "hp": 17
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "startCount": 14,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "wall",
+          "x": -1.3,
+          "width": 1.4,
+          "damage": 6
+        },
+        {
+          "z": 21,
+          "type": "hole",
+          "x": 1.5,
+          "width": 1.8
+        },
+        {
+          "z": 30,
+          "type": "hole",
+          "x": -1.5,
+          "width": 1.8
+        },
+        {
+          "z": 39,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 9,
+          "width": 1.3
+        },
+        {
+          "z": 48,
+          "type": "gate",
+          "op": "add",
+          "value": 4,
+          "x": 0
+        },
+        {
+          "z": 58,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 9,
+          "width": 1.3
+        },
+        {
+          "z": 75,
+          "type": "finish",
+          "hp": 4
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "startCount": 14,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "saw",
+          "x": -1.1,
+          "damage": 10,
+          "width": 1.45
+        },
+        {
+          "z": 22,
+          "type": "saw",
+          "x": 1.1,
+          "damage": 10,
+          "width": 1.45
+        },
+        {
+          "z": 32,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 42,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 3
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 52,
+          "type": "gate",
+          "op": "mul",
+          "value": 3,
+          "x": 0
+        },
+        {
+          "z": 62,
+          "type": "gate",
+          "op": "div",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 72,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 6
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 90,
+          "type": "finish",
+          "hp": 10
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "startCount": 14,
+      "pieces": [
+        {
+          "z": 12,
+          "type": "dualgate",
+          "left": {
+            "op": "mul",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 5
+          }
+        },
+        {
+          "z": 23,
+          "type": "gate",
+          "op": "mul",
+          "value": 2,
+          "x": 0
+        },
+        {
+          "z": 34,
+          "type": "gate",
+          "op": "add",
+          "value": 6,
+          "x": 0
+        },
+        {
+          "z": 44,
+          "type": "dualgate",
+          "left": {
+            "op": "add",
+            "value": 4
+          },
+          "right": {
+            "op": "add",
+            "value": 2
+          }
+        },
+        {
+          "z": 63,
+          "type": "finish",
+          "hp": 67
+        }
+      ]
+    }
+  ]
+}

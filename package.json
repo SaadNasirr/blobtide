@@ -1,0 +1,19 @@
+{
+  "name": "blobtide",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host",
+    "test": "node --test src/tests/*.test.mjs",
+    "generate-levels": "node scripts/generate-levels.mjs"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  }
+}
