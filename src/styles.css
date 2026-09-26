@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap");
-
 :root {
   color-scheme: dark;
   --ink: #fffdf8;
@@ -12,7 +10,10 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body, #app {
-  width: 100%; height: 100%; overflow: hidden;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
   background: #1a1458;
   font-family: Nunito, "Segoe UI", sans-serif;
   touch-action: none;
@@ -20,22 +21,34 @@ html, body, #app {
   user-select: none;
   -webkit-user-select: none;
 }
+html, body {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+}
 #app {
-  display: grid; place-items: center; position: relative;
+  display: grid;
+  place-items: center;
+  position: relative;
   background: radial-gradient(circle at 50% 12%, #7a4dff, #2b1f78 48%, #120c3a);
+  container-type: size;
 }
 #game, #hud {
-  position: absolute; top: 50%; left: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%; height: 100%;
+  width: min(100%, calc(100cqh * 9 / 16));
+  height: min(100%, calc(100cqw * 16 / 9));
 }
 #hud { pointer-events: none; }
-@media (min-width: 720px) {
+@supports not (width: 1cqh) {
   #game, #hud {
-    width: min(100vw, calc(100vh * 9 / 16));
-    height: min(100vh, calc(100vw * 16 / 9));
-    border-radius: 28px; overflow: hidden;
-    box-shadow: 0 24px 80px #12084acc, 0 0 0 1px #fff2;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: none;
   }
 }
 .safe { position: relative; width: 100%; height: 100%; pointer-events: none; color: var(--ink); }

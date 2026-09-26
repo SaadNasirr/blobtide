@@ -26,7 +26,10 @@ export default defineConfig({
       transformIndexHtml: {
         order: "post",
         handler(html) {
-          return html.replace(/\s+crossorigin(="[^"]*")?/g, "");
+          return html
+            .replace(/\s+crossorigin(="[^"]*")?/g, "")
+            .replace(/<script type="module"([^>]*)><\/script>/g, "<script defer$1></script>")
+            .replace(/<script src="(\.\/assets\/game\.js)"><\/script>/g, '<script defer src="$1"></script>');
         },
       },
     },
@@ -41,7 +44,18 @@ export default defineConfig({
     headers: securityHeaders,
   },
   build: {
-    target: "es2020",
+    target: "es2019",
     assetsInlineLimit: 0,
+    modulePreload: false,
+    rollupOptions: {
+      output: {
+        format: "iife",
+        name: "BlobtideApp",
+        inlineDynamicImports: true,
+        entryFileNames: "assets/game.js",
+        chunkFileNames: "assets/[name].js",
+        assetFileNames: "assets/[name][extname]",
+      },
+    },
   },
 });

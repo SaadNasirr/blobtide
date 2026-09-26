@@ -131,13 +131,17 @@ export class Game {
 
     window.addEventListener("resize", this._onResize);
     document.addEventListener("visibilitychange", this._onVis);
+    this._ro = typeof ResizeObserver === "function" ? new ResizeObserver(() => this._resize()) : null;
+    this._ro?.observe(this.canvas);
     this._resize();
+    requestAnimationFrame(() => this._resize());
   }
 
   dispose() {
     this._alive = false;
     cancelAnimationFrame(this.raf);
     this.raf = 0;
+    this._ro?.disconnect();
     window.removeEventListener("resize", this._onResize);
     document.removeEventListener("visibilitychange", this._onVis);
     this.input.unbind();
@@ -171,8 +175,9 @@ export class Game {
   }
 
   _resize() {
-    const w = Math.max(1, this.canvas.clientWidth);
-    const h = Math.max(1, this.canvas.clientHeight);
+    const box = this.canvas.parentElement || this.canvas;
+    const w = Math.max(2, Math.floor(this.canvas.clientWidth || box.clientWidth || window.innerWidth || 360));
+    const h = Math.max(2, Math.floor(this.canvas.clientHeight || box.clientHeight || window.innerHeight || 640));
     this.renderer.setSize(w, h, false);
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();

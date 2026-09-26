@@ -251,7 +251,7 @@ export class Hud {
       hideToggle: this.root.querySelector("#hide-toggle"),
       replayTutorial: this.root.querySelector("#replay-tutorial"),
     };
-    setTimeout(() => this.els.splash?.classList.add("gone"), 700);
+    setTimeout(() => this.els.splash?.classList.add("gone"), 400);
   }
 
   hideSplash() {
