@@ -3,6 +3,8 @@ export class Sfx {
     this.ctx = null;
     this.master = null;
     this.muted = false;
+    this.musicLevel = 0.7;
+    this.sfxLevel = 1;
     this._musicOn = false;
     this._musicGain = null;
     this._musicTimer = 0;
@@ -13,8 +15,17 @@ export class Sfx {
   }
 
   setMuted(muted) {
+    this.setMix({ muted });
+  }
+
+  setMix({ muted = this.muted, music = this.musicLevel, sfx = this.sfxLevel } = {}) {
     this.muted = !!muted;
+    this.musicLevel = Math.min(1, Math.max(0, Number(music) || 0));
+    this.sfxLevel = Math.min(1, Math.max(0, Number(sfx) || 0));
     if (this.master) this.master.gain.value = this.muted ? 0 : 1;
+    if (this._musicGain) {
+      this._musicGain.gain.value = this.muted ? 0.0001 : Math.max(0.0001, this.musicLevel);
+    }
     if (this.muted) this.stopMusic();
   }
 
@@ -42,7 +53,7 @@ export class Sfx {
     const g = ctx.createGain();
     o.type = type;
     o.frequency.value = freq;
-    g.gain.value = Math.max(0.0008, gain);
+    g.gain.value = Math.max(0.0008, gain * this.sfxLevel);
     g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
     o.connect(g);
     g.connect(this.master);
@@ -92,7 +103,7 @@ export class Sfx {
     this._musicGain = ctx.createGain();
     this._musicGain.gain.value = 0.0001;
     this._musicGain.connect(this.master);
-    this._musicGain.gain.exponentialRampToValueAtTime(0.9, ctx.currentTime + 0.18);
+    this._musicGain.gain.exponentialRampToValueAtTime(Math.max(0.12, this.musicLevel), ctx.currentTime + 0.18);
     this._musicOn = true;
     this._step = 0;
     this._nextNote = ctx.currentTime + 0.05;
@@ -236,11 +247,14 @@ export class Shake {
     this.mag = Math.max(this.mag, amount);
   }
   offset(reduceMotion) {
-    if (reduceMotion || this.mag < 0.002) return { x: 0, y: 0 };
-    this.mag *= 0.86;
+    if (reduceMotion || this.mag < 0.002) {
+      this.mag *= 0.5;
+      return { x: 0, y: 0 };
+    }
+    this.mag *= 0.82;
     return {
       x: (Math.random() - 0.5) * this.mag,
-      y: (Math.random() - 0.5) * this.mag,
+      y: (Math.random() - 0.5) * this.mag * 0.7,
     };
   }
 }

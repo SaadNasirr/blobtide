@@ -1,0 +1,11 @@
+{
+  "appId": "com.blobtide.game",
+  "appName": "Blobtide",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": false
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}

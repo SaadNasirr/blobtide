@@ -84,40 +84,45 @@ const memoryFallback = {
   },
 };
 
-export const TutorialStore = createTutorialPersistence(
-  typeof localStorage === "undefined" ? memoryFallback : localStorage
-);
+export const TutorialStore = createTutorialPersistence({
+  getItem(key) {
+    try {
+      if (typeof localStorage === "undefined") return memoryFallback.getItem(key);
+      return localStorage.getItem(key);
+    } catch {
+      return memoryFallback.getItem(key);
+    }
+  },
+  setItem(key, value) {
+    try {
+      if (typeof localStorage === "undefined") return memoryFallback.setItem(key, value);
+      localStorage.setItem(key, value);
+    } catch {
+      memoryFallback.setItem(key, value);
+    }
+  },
+});
 
 export const FULL_STEPS = [
   {
     id: "move",
-    title: "Swerve",
-    body: "Swipe left or right from your finger. On a keyboard, hold A / D or the arrows to steer.",
+    title: "Swipe",
+    body: "Drag to swerve. Green grows you.",
   },
   {
     id: "gates",
-    title: "Gates",
-    body: "Green + and x grow your slime. Red − and ÷ shrink it. Pick the bigger path.",
-  },
-  {
-    id: "hazards",
-    title: "Hazards",
-    body: "Saws, holes, and walls steal slime. Gold coins, cyan boosts, and ice shields are worth grabbing. Tap for nitro.",
+    title: "Pick a side",
+    body: "Hit + / x. Dodge red.",
   },
   {
     id: "door",
-    title: "Smash the door",
-    body: "If your crowd number is at least as big as the golden door, you smash it and win coins.",
-  },
-  {
-    id: "meta",
-    title: "Pause & skins",
-    body: "P or Esc pauses. Coins buy skins. Optional ads can continue a fail or double coins.",
+    title: "Fight",
+    body: "If your number is bigger, you win the clash.",
   },
 ];
 
 export const REFRESHER_STEP = {
   id: "refresher",
   title: "Quick reminder",
-  body: "Swerve into green gates. Dodge saws. Smash the door if you are big enough.",
+  body: "Hit green gates. Dodge red. Fight if you are bigger.",
 };

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://saadnasirr.github.io/blobtide/sitemap.xml

@@ -1,3 +1,4 @@
+import { allowMockPurchases, isNativeApp } from "./config.js";
 import { LEVELS } from "./content/levels.js";
 import { SKINS } from "./content/skins.js";
 import { Economy } from "./game/Economy.js";
@@ -10,6 +11,7 @@ import {
   applyTutorialEvent,
 } from "./game/Tutorial.js";
 import { SettingsStore } from "./game/Settings.js";
+import { installCrazyGamesPlatform } from "./platform/crazygames.js";
 
 const canvas = document.querySelector("#game");
 const hud = new Hud(document.querySelector("#hud"));
@@ -31,6 +33,7 @@ try {
     movedEnough: false,
     skinId: "lime",
     sfx: { ui() {}, ensure() {}, setMuted() {}, startMusic() {}, stopMusic() {} },
+    applyAudio() {},
     setMuted() {},
     startLevel() {},
     togglePause() {},
@@ -61,8 +64,45 @@ let replayTutorial = false;
 
 hud.setCoins(economy.coins);
 hud.els.muteToggle.checked = settings.muted;
+if (hud.els.musicVol) hud.els.musicVol.value = String(Math.round(settings.music * 100));
+if (hud.els.sfxVol) hud.els.sfxVol.value = String(Math.round(settings.sfx * 100));
+game.applyAudio(settings);
+
+game.onCoin = (n) => {
+  economy.addCoins(n);
+  hud.setCoins(economy.coins);
+  Analytics.event("coins_collected", { amount: n });
+  const done = economy.pushMission("coins", n);
+  if (done.completed) hud.toast(`${done.mission.label} · +${done.reward}`);
+  refreshHook();
+};
+
+if (!isNativeApp() && hud.els.iap) {
+  hud.els.iap.classList.add("hidden");
+  hud.root.querySelector(".packs")?.classList.add("hidden");
+  hud.root.querySelector(".shop-legal")?.classList.add("hidden");
+}
+
+if (economy.maxUnlocked > 0 && hud.els.play) hud.els.play.textContent = "CONTINUE";
 hud.els.hideToggle.checked = tutorial.hideInstructions;
-game.setMuted(settings.muted);
+
+function refreshHook() {
+  const view = economy.hookView();
+  hud.setHook(view);
+  if (view.winStreak >= 2 && hud.els.play) hud.els.play.textContent = "KEEP GOING";
+  else if (economy.maxUnlocked > 0 && hud.els.play) hud.els.play.textContent = "CONTINUE";
+}
+
+const daily = economy.claimDaily();
+hud.setCoins(economy.coins);
+if (daily.claim > 0) hud.toast(`Day ${daily.streak} bonus · +${daily.claim}`);
+refreshHook();
+
+game.onCombo = () => {
+  const done = economy.pushMission("combo", 1);
+  if (done.completed) hud.toast(`${done.mission.label} · +${done.reward}`);
+  refreshHook();
+};
 
 function persistTutorial() {
   TutorialStore.save(tutorial);
@@ -80,13 +120,20 @@ function currentLevel() {
   return { level: LEVELS[i], index: i };
 }
 
+let sessionLive = false;
 function play({ countSession = true } = {}) {
+  if (!sessionLive) {
+    sessionLive = true;
+    Analytics.event("game_started");
+  }
   if (economy.campaignComplete && game.state === "menu") {
     economy.beginNewRun();
     hud.toast("New run · Level 1");
   }
   const { level, index } = currentLevel();
   hud.setCoins(economy.coins);
+  game.streakAtStart = economy.winStreak;
+  refreshHook();
   if (countSession || replayTutorial) {
     const started = beginPlaySession(tutorial, { replay: replayTutorial });
     tutorial = started.state;
@@ -101,6 +148,7 @@ function play({ countSession = true } = {}) {
 function restartLevel() {
   if (game.state === "menu") return;
   hud.hideResult();
+  game.streakAtStart = economy.winStreak;
   const { level, index } = currentLevel();
   game.startLevel(level, index, economy.equipped);
 }
@@ -141,6 +189,20 @@ hud.els.skins.onclick = () => {
   hud.renderSkins(SKINS, economy, onSkin);
   hud.showShop();
 };
+hud.els.levels.onclick = () => {
+  clickSound();
+  hud.renderLevels(LEVELS.length, economy, (index) => {
+    economy.levelIndex = index;
+    economy.save();
+    hud.showMenu();
+    play({ countSession: false });
+  });
+  hud.showLevels();
+};
+hud.els.levelsBack.onclick = () => {
+  clickSound();
+  hud.showMenu();
+};
 hud.els.how.onclick = () => {
   clickSound();
   hud.showHelp();
@@ -156,10 +218,16 @@ hud.els.helpBack.onclick = () => {
     hud.els.pause.classList.remove("hidden");
   } else hud.showMenu();
 };
+function storeOnlyToast() {
+  hud.toast("Buy this in the Play Store or App Store app");
+}
+
 hud.els.iap.onclick = async () => {
   clickSound();
-  await iap.buyRemoveAds();
-  hud.toast(economy.removeAds ? "Ads removed" : "Purchase failed");
+  const ok = await iap.buyRemoveAds();
+  if (ok) hud.toast("Ads removed");
+  else if (!allowMockPurchases()) storeOnlyToast();
+  else hud.toast("Purchase failed");
 };
 
 hud.els.pauseBtn.onclick = () => {
@@ -181,6 +249,8 @@ hud.els.pauseRetry.onclick = () => {
 };
 hud.els.pauseMenu.onclick = () => {
   clickSound();
+  economy.noteFail();
+  refreshHook();
   game.goMenu();
 };
 
@@ -204,12 +274,18 @@ hud.els.hintHide.onclick = () => {
 hud.els.muteToggle.onchange = () => {
   settings.muted = hud.els.muteToggle.checked;
   SettingsStore.save(settings);
-  game.setMuted(settings.muted);
-  game.onCoin = (n) => {
-    economy.addCoins(n);
-    hud.setCoins(economy.coins);
-  };
+  game.applyAudio(settings);
 };
+hud.els.musicVol?.addEventListener("input", () => {
+  settings.music = Number(hud.els.musicVol.value) / 100;
+  SettingsStore.save(settings);
+  game.applyAudio(settings);
+});
+hud.els.sfxVol?.addEventListener("input", () => {
+  settings.sfx = Number(hud.els.sfxVol.value) / 100;
+  SettingsStore.save(settings);
+  game.applyAudio(settings);
+});
 hud.els.hideToggle.onchange = () => {
   tutorial = applyTutorialEvent(tutorial, hud.els.hideToggle.checked ? "hide" : "show");
   persistTutorial();
@@ -228,9 +304,11 @@ hud.root.querySelectorAll("[data-pack]").forEach((btn) => {
   btn.onclick = async () => {
     clickSound();
     const pack = btn.dataset.pack;
-    if (pack === "small") await iap.buyCoins(200, "coins_200");
-    if (pack === "medium") await iap.buyCoins(1000, "coins_1000");
-    if (pack === "prism") await iap.buyPrism();
+    let ok = false;
+    if (pack === "small") ok = await iap.buyCoins(200, "coins_200");
+    if (pack === "medium") ok = await iap.buyCoins(1000, "coins_1000");
+    if (pack === "prism") ok = await iap.buyPrism();
+    if (!ok && !allowMockPurchases()) storeOnlyToast();
     hud.setCoins(economy.coins);
     hud.renderSkins(SKINS, economy, onSkin);
   };
@@ -240,8 +318,10 @@ function onSkin(skin) {
   clickSound();
   if (economy.ownedSkins.includes(skin.id)) {
     economy.equip(skin.id);
+    Analytics.event("skin_equipped", { skin: skin.id });
   } else if (skin.iap) {
-    iap.buyPrism().then(() => {
+    iap.buyPrism().then((ok) => {
+      if (!ok && !allowMockPurchases()) storeOnlyToast();
       hud.setCoins(economy.coins);
       hud.renderSkins(SKINS, economy, onSkin);
     });
@@ -253,6 +333,17 @@ function onSkin(skin) {
   hud.setCoins(economy.coins);
   hud.renderSkins(SKINS, economy, onSkin);
   game.skinId = economy.equipped;
+  Analytics.event("skin_unlocked", { skin: skin.id });
+}
+
+function settleWinReward() {
+  if (game.rewardSettled) return;
+  game.rewardSettled = true;
+  economy.addCoins(game.lastReward || 0);
+  if (game.lastWin) economy.recordLevelWin(game.levelIndex, game.lastWin);
+  economy.noteWin(game.lastWin?.stars || 1);
+  hud.setCoins(economy.coins);
+  refreshHook();
 }
 
 let advancing = false;
@@ -265,24 +356,40 @@ hud.els.resultPrimary.onclick = async () => {
   try {
     if (mode === "win") {
       const last = game.isLastLevel();
-      economy.addCoins(game.lastReward || 0);
+      settleWinReward();
       economy.onWin(game.levelIndex);
-      hud.setCoins(economy.coins);
       hud.hideResult();
       if (last) {
         game.goMenu();
         hud.toast("Campaign complete");
         return;
       }
-      await ads.maybeInterstitial();
+      await ads.maybeInterstitial(hud.tutorialMode !== "none");
       play({ countSession: false });
     } else {
+      economy.noteFail();
+      refreshHook();
       hud.hideResult();
+      Analytics.event("replay", { level: game.levelIndex + 1 });
       play({ countSession: false });
     }
   } finally {
     advancing = false;
   }
+};
+
+hud.els.resultReplay.onclick = () => {
+  if (advancing) return;
+  clickSound();
+  const mode = hud.els.result.dataset.mode;
+  if (mode === "win") settleWinReward();
+  else {
+    economy.noteFail();
+    refreshHook();
+  }
+  hud.hideResult();
+  Analytics.event("replay", { level: game.levelIndex + 1 });
+  play({ countSession: false });
 };
 
 hud.els.resultSecondary.onclick = async () => {
@@ -300,6 +407,7 @@ hud.els.resultSecondary.onclick = async () => {
     Analytics.event("rewarded_double_coins");
   } else {
     game.continueWithBurst();
+    Analytics.event("continue_used");
     Analytics.event("rewarded_continue");
   }
 };
@@ -307,14 +415,26 @@ hud.els.resultSecondary.onclick = async () => {
 hud.els.resultMenu.onclick = () => {
   clickSound();
   if (hud.els.result.dataset.mode === "win") {
-    economy.addCoins(game.lastReward || 0);
+    settleWinReward();
     economy.onWin(game.levelIndex);
-    hud.setCoins(economy.coins);
+  } else {
+    economy.noteFail();
+    refreshHook();
   }
   game.goMenu();
 };
 
 Consent.request().then(() => Analytics.event("boot"));
+
+if (window.Capacitor?.isNativePlatform?.()) {
+  import("./platform/capacitorBridge.js").then(async (mod) => {
+    await mod.installNativeBridge();
+    await iap.restore();
+    hud.setCoins(economy.coins);
+  });
+}
+
+installCrazyGamesPlatform().catch(() => {});
 game.tick();
 
 if (new URLSearchParams(location.search).has("capture")) {

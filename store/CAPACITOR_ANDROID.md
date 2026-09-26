@@ -16,6 +16,8 @@ Then in Android Studio: Generate App Bundle.
 AdMob: `@capacitor-community/admob`  
 IAP: `@capgo/native-purchases` or Google Play Billing via a Capacitor plugin  
 
-Assign the plugins to `window.BlobtideNativeAds` / `window.BlobtideNativeIap` (see `native/admob.js`).
+`src/platform/capacitorBridge.js` assigns `window.BlobtideNativeAds` / `window.BlobtideNativeIap` and restores purchases on boot. Keep Google **test** ad units until closed testing. Then paste real units into `src/config.js`.
+
+Do not enable mock IAP on the live site — only localhost still grants test purchases.
 
 iOS still needs a Mac for `npx cap add ios` + Xcode.

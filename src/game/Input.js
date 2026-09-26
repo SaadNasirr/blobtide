@@ -62,7 +62,9 @@ export class Input {
       const held = performance.now() - (this._downAt || 0);
       const dx = Math.abs((e?.clientX ?? this.pointerX) - (this._downX || 0));
       this.dragging = false;
-      if (this._downAt && held < 200 && dx < 16) this.onNitro?.();
+      if (this._downAt && held < 160 && dx < 12) {
+        /* Count-masters style: drag only steers; nitro is W / Space. */
+      }
       this._downAt = 0;
     };
     const keydown = (e) => {

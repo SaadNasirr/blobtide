@@ -1,6 +1,6 @@
 /**
- * Optional Capacitor / native bridge.
- * Store builds should assign these on window after AdMob + Billing plugins load.
+ * Store builds should import `src/platform/capacitorBridge.js` from main.js
+ * after Capacitor plugins load. This file is the QA mock only.
  */
 export function installNativeMocks() {
   window.BlobtideNativeAds = window.BlobtideNativeAds || {

@@ -8,9 +8,9 @@ Content rating: questionnaire as **Everyone** / PEGI 3 if no violence beyond abs
 
 ## Store listing copy
 
-**Title (30):** Blobtide
+**Title (30):** Blobtide: Crowd Runner
 
-**Short (80):** Swerve a glowing slime crowd through x2 gates and smash the golden door.
+**Short (80):** Swerve slime, hit x2 gates, smash the door. One-thumb runner. Short levels.
 
 **Full:**
 Blobtide is a one-thumb crowd runner. Drag to swerve. Hit + and x gates to grow. Dodge saws and holes. Smash the door if your crowd is big enough.

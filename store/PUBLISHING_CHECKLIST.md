@@ -2,11 +2,12 @@
 
 ## Web (ready when `npm run build` succeeds)
 
-- [ ] `npm test` passes
-- [ ] `npm run build` produces `dist/`
-- [ ] Host `dist/` on Netlify / Pages / itch (see WEB_DEPLOY.md)
-- [ ] Privacy policy hosted at a public HTTPS URL (`legal/privacy-policy.html`)
+- [x] `npm test` passes (local)
+- [x] `npm run build` produces `dist/`
+- [x] Host `dist/` on GitHub Pages (https://saadnasirr.github.io/blobtide/)
+- [x] Privacy policy HTTPS URL
 - [ ] Play on a real phone over HTTPS (audio unlock after first tap)
+- [x] Save sanitizer + store-only IAP on the public web build
 
 ## Android (not submitted from this machine)
 

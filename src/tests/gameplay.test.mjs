@@ -44,9 +44,13 @@ test("every level ends with a smash door and valid pieces", () => {
   }
 });
 
-test("late levels are stricter than the tutorial", () => {
+test("late levels are stricter and longer than the tutorial", () => {
   const early = simulateBest(LEVELS[0]);
   const late = simulateBest(LEVELS[55]);
   assert.ok(LEVELS[55].pieces.length > LEVELS[0].pieces.length);
   assert.ok(late.hp > early.hp, `late door ${late.hp} should beat early door ${early.hp}`);
+  assert.ok(LEVELS[0].pieces.at(-1).z >= 90, "level 1 should run for a while");
+  assert.ok(LEVELS[20].pieces.at(-1).z > LEVELS[0].pieces.at(-1).z + 20);
+  assert.ok(LEVELS[0].pieces.some((p) => p.type === "army"));
+  assert.ok(LEVELS[1].pieces.some((p) => p.type === "star"));
 });

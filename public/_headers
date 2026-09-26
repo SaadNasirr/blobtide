@@ -1,0 +1,5 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://sdk.crazygames.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://sdk.crazygames.com https://www.crazygames.com https://api.crazygames.com; media-src 'self'; frame-ancestors 'self' https://www.crazygames.com https://crazygames.com https://www.poki.com https://poki.com; base-uri 'self'; form-action 'none'

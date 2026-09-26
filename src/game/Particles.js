@@ -1,11 +1,12 @@
 import * as THREE from "three";
 
-const MAX = 64;
+const MAX = 96;
 
 export class Particles {
   constructor(scene) {
     this.dummy = new THREE.Object3D();
     this.items = [];
+    this._pool = [];
     const geo = new THREE.SphereGeometry(0.07, 6, 6);
     const mat = new THREE.MeshBasicMaterial({ color: 0xc6ff4a });
     this.mesh = new THREE.InstancedMesh(geo, mat, MAX);
@@ -18,19 +19,19 @@ export class Particles {
   burst(x, y, z, hex, count = 14, speed = 4) {
     this.mesh.material.color.setHex(hex);
     for (let i = 0; i < count; i++) {
-      if (this.items.length >= MAX) this.items.shift();
+      const p = this._pool.pop() || {};
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.random() * Math.PI;
-      this.items.push({
-        x,
-        y,
-        z,
-        vx: Math.cos(theta) * Math.sin(phi) * speed,
-        vy: Math.abs(Math.cos(phi)) * speed + 1.2,
-        vz: Math.sin(theta) * Math.sin(phi) * speed * 0.4,
-        life: 0.45 + Math.random() * 0.25,
-        age: 0,
-      });
+      p.x = x;
+      p.y = y;
+      p.z = z;
+      p.vx = Math.cos(theta) * Math.sin(phi) * speed;
+      p.vy = Math.abs(Math.cos(phi)) * speed + 1.2;
+      p.vz = Math.sin(theta) * Math.sin(phi) * speed * 0.4;
+      p.life = 0.42 + Math.random() * 0.22;
+      p.age = 0;
+      if (this.items.length >= MAX) this._pool.push(this.items.shift());
+      this.items.push(p);
     }
   }
 
@@ -47,7 +48,10 @@ export class Particles {
       p.y += p.vy * dt;
       p.z += p.vz * dt;
       p.vy -= 9 * dt;
-      if (p.age >= p.life) this.items.splice(i, 1);
+      if (p.age >= p.life) {
+        this.items.splice(i, 1);
+        this._pool.push(p);
+      }
     }
     const n = this.items.length;
     for (let i = 0; i < n; i++) {
