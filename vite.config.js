@@ -1,16 +1,14 @@
 import { defineConfig } from "vite";
 
 const csp = [
-  "default-src 'self'",
-  "script-src 'self' https://sdk.crazygames.com",
+  "default-src 'self' https: data: blob:",
+  "script-src 'self' 'unsafe-inline' https://sdk.crazygames.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data:",
-  "connect-src 'self' https://sdk.crazygames.com https://www.crazygames.com https://api.crazygames.com",
+  "font-src 'self' https://fonts.gstatic.com data:",
+  "img-src 'self' data: https:",
+  "connect-src 'self' https: wss:",
   "media-src 'self'",
-  "frame-ancestors 'self' https://www.crazygames.com https://crazygames.com https://www.poki.com https://poki.com",
   "base-uri 'self'",
-  "form-action 'none'",
 ].join("; ");
 
 const securityHeaders = {
@@ -22,6 +20,17 @@ const securityHeaders = {
 
 export default defineConfig({
   base: "./",
+  plugins: [
+    {
+      name: "portal-html",
+      transformIndexHtml: {
+        order: "post",
+        handler(html) {
+          return html.replace(/\s+crossorigin(="[^"]*")?/g, "");
+        },
+      },
+    },
+  ],
   server: {
     port: 5173,
     host: true,
