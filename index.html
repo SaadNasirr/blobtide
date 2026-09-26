@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
     />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://sdk.crazygames.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://sdk.crazygames.com https://www.crazygames.com https://api.crazygames.com; media-src 'self'; frame-ancestors 'self' https://www.crazygames.com https://crazygames.com https://www.poki.com https://poki.com; base-uri 'self'; form-action 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https://sdk.crazygames.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https: wss:; media-src 'self'; base-uri 'self'" />
     <meta name="theme-color" content="#2b1f78" />
     <meta name="description" content="Blobtide is a one-thumb crowd runner. Swerve glowing slime, hit x2 gates, smash the door. Free to play on web now, Android and iOS next." />
     <meta name="keywords" content="crowd runner, slime game, multiply gates, one thumb, hypercasual, swipe runner" />
@@ -26,13 +26,13 @@
     <link rel="apple-touch-icon" href="./favicon.svg" />
     <title>Blobtide — One-thumb crowd runner</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link rel="icon" href="./favicon.svg" />
     <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
-    <script type="module" crossorigin src="./assets/index-BRGN3XT0.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-AamzaWya.css">
+    <script type="module" src="./assets/index-BRGN3XT0.js"></script>
+    <link rel="stylesheet" href="./assets/index-AamzaWya.css">
   </head>
-  <body>
+  <body style="margin:0;background:#1a1458">
     <div id="app">
       <canvas id="game"></canvas>
       <div id="hud"></div>
