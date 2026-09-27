@@ -1,3 +1,5 @@
+export const TOUCH_BUDGET_MS = 100;
+
 const GAME_KEYS = new Set([
   "ArrowLeft",
   "ArrowRight",
@@ -35,7 +37,7 @@ export class Input {
     if (el.isContentEditable) return true;
     const tag = el.tagName;
     if (tag === "INPUT" || tag === "TEXTAREA" || tag === "BUTTON" || tag === "A" || tag === "LABEL") return true;
-    return !!el.closest("button, input, label, a, .sheet, .overlay-card, .hint-card, .ad, .wallet, .home, .splash");
+    return !!el.closest("button, input, label, a, .sheet, .overlay-card, .hint-card, .ad, .wallet, .hud-right, .mute-btn, .home, .splash");
   }
 
   bind(canvas) {
@@ -78,8 +80,8 @@ export class Input {
       this.keys.add(e.key);
       if (e.key === "p" || e.key === "P" || e.key === "Escape") this.onPause?.();
       if (e.key === "r" || e.key === "R") this.onRestart?.();
-      if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") this.onNudge?.(-1);
-      if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") this.onNudge?.(1);
+      if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A" || e.code === "KeyA") this.onNudge?.(-1);
+      if (e.key === "ArrowRight" || e.key === "d" || e.key === "D" || e.code === "KeyD") this.onNudge?.(1);
       if (e.key === " " || e.key === "w" || e.key === "W" || e.key === "ArrowUp") this.onNitro?.();
     };
     const keyup = (e) => {
@@ -87,8 +89,8 @@ export class Input {
     };
     const preventScroll = (e) => e.preventDefault();
 
-    stage.addEventListener("pointerdown", down);
-    window.addEventListener("pointermove", move);
+    stage.addEventListener("pointerdown", down, { passive: true });
+    window.addEventListener("pointermove", move, { passive: true });
     window.addEventListener("pointerup", up);
     window.addEventListener("pointercancel", up);
     window.addEventListener("keydown", keydown);

@@ -1,5 +1,5 @@
 import { allowMockPurchases, isNativeApp } from "./config.js";
-import { LEVELS } from "./content/levels.js";
+import { LEVELS, simulatePlay } from "./content/levels.js";
 import { SKINS } from "./content/skins.js";
 import { Economy } from "./game/Economy.js";
 import { AdsService, IapService, Analytics, Consent } from "./game/Services.js";
@@ -11,11 +11,41 @@ import {
   applyTutorialEvent,
 } from "./game/Tutorial.js";
 import { SettingsStore } from "./game/Settings.js";
-import { installCrazyGamesPlatform } from "./platform/crazygames.js";
+import { Platform } from "./platform/adapter.js";
+import { crazyGamesLoadingStart, crazyGamesLoadingStop, installCrazyGamesPlatform, isCrazyGamesHost, muteAudioFromSearch } from "./platform/crazygames.js";
+import { worldForLevel } from "./content/themes.js";
 
-const canvas = document.querySelector("#game");
-const hud = new Hud(document.querySelector("#hud"));
+crazyGamesLoadingStart();
 
+function showBootError(err) {
+  const msg = String(err?.message || err || "unknown error");
+  const bootLine = document.querySelector("#boot-home p");
+  if (bootLine) bootLine.textContent = msg;
+  if (document.getElementById("boot-err")) return;
+  const p = document.createElement("p");
+  p.id = "boot-err";
+  p.setAttribute(
+    "style",
+    "position:absolute;left:16px;right:16px;bottom:24px;z-index:99;color:#fff;font-family:sans-serif;background:#4a1840ee;padding:14px;border-radius:12px"
+  );
+  p.textContent = `Blobtide failed to start: ${msg}`;
+  (document.body || document.documentElement).appendChild(p);
+}
+
+function bootBlobtide() {
+  if (window.__blobtideStarted) return true;
+  const canvas = document.querySelector("#game");
+  const hudRoot = document.querySelector("#hud");
+  if (!canvas || !hudRoot) return false;
+  let hud;
+  try {
+    hud = new Hud(hudRoot);
+  } catch (err) {
+    showBootError(err);
+    return false;
+  }
+  window.__blobtideStarted = true;
+  try {
 if (window.__blobtideCleanup) window.__blobtideCleanup();
 
 let game;
@@ -60,10 +90,12 @@ const ads = new AdsService(economy, hud);
 const iap = new IapService(economy);
 let tutorial = TutorialStore.load();
 let settings = SettingsStore.load();
+if (muteAudioFromSearch(location.search)) settings.muted = true;
 let replayTutorial = false;
 
 hud.setCoins(economy.coins);
-hud.els.muteToggle.checked = settings.muted;
+if (hud.els.muteToggle) hud.els.muteToggle.checked = settings.muted;
+hud.setMuted(settings.muted);
 if (hud.els.musicVol) hud.els.musicVol.value = String(Math.round(settings.music * 100));
 if (hud.els.sfxVol) hud.els.sfxVol.value = String(Math.round(settings.sfx * 100));
 game.applyAudio(settings);
@@ -71,26 +103,27 @@ game.applyAudio(settings);
 game.onCoin = (n) => {
   economy.addCoins(n);
   hud.setCoins(economy.coins);
-  Analytics.event("coins_collected", { amount: n });
-  const done = economy.pushMission("coins", n);
-  if (done.completed) hud.toast(`${done.mission.label} · +${done.reward}`);
+  if (n > 0) {
+    Analytics.event("coins_collected", { amount: n });
+    const done = economy.pushMission("coins", n);
+    if (done.completed) hud.toast(`${done.mission.label} · +${done.reward}`);
+  }
   refreshHook();
 };
 
 if (!isNativeApp() && hud.els.iap) {
   hud.els.iap.classList.add("hidden");
   hud.root.querySelector(".packs")?.classList.add("hidden");
-  hud.root.querySelector(".shop-legal")?.classList.add("hidden");
 }
 
-if (economy.maxUnlocked > 0 && hud.els.play) hud.els.play.textContent = "CONTINUE";
-hud.els.hideToggle.checked = tutorial.hideInstructions;
+if (economy.maxUnlocked > 0 && hud.els.play) hud.els.play.textContent = "Continue";
+if (hud.els.hideToggle) hud.els.hideToggle.checked = tutorial.hideInstructions;
 
 function refreshHook() {
   const view = economy.hookView();
   hud.setHook(view);
-  if (view.winStreak >= 2 && hud.els.play) hud.els.play.textContent = "KEEP GOING";
-  else if (economy.maxUnlocked > 0 && hud.els.play) hud.els.play.textContent = "CONTINUE";
+  if (view.winStreak >= 2 && hud.els.play) hud.els.play.textContent = "Keep going";
+  else if (economy.maxUnlocked > 0 && hud.els.play) hud.els.play.textContent = "Continue";
 }
 
 const daily = economy.claimDaily();
@@ -112,7 +145,7 @@ function persistTutorial() {
 function clickSound() {
   game.sfx.ui();
   game.sfx.ensure();
-  if (game.state === "menu") game.sfx.startMusic();
+  if (!game.sfx.muted) game.sfx.startMusic();
 }
 
 function currentLevel() {
@@ -191,16 +224,20 @@ hud.els.skins.onclick = () => {
 };
 hud.els.levels.onclick = () => {
   clickSound();
+  hud._mapWorld = null;
   hud.renderLevels(LEVELS.length, economy, (index) => {
     economy.levelIndex = index;
     economy.save();
     hud.showMenu();
     play({ countSession: false });
+  }, (id) => {
+    hud.toast(`Level ${id} (locked) · Beat level ${id - 1} to unlock`);
   });
   hud.showLevels();
 };
 hud.els.levelsBack.onclick = () => {
   clickSound();
+  if (hud.mapBack()) return;
   hud.showMenu();
 };
 hud.els.how.onclick = () => {
@@ -215,11 +252,11 @@ hud.els.helpBack.onclick = () => {
   clickSound();
   if (game.paused) {
     hud.els.help.classList.add("hidden");
-    hud.els.pause.classList.remove("hidden");
+    hud.setPaused(true);
   } else hud.showMenu();
 };
 function storeOnlyToast() {
-  hud.toast("Buy this in the Play Store or App Store app");
+  hud.toast("Not available in this version");
 }
 
 hud.els.iap.onclick = async () => {
@@ -238,17 +275,18 @@ hud.els.resume.onclick = () => {
   clickSound();
   if (game.paused) game.togglePause();
 };
-hud.els.pauseHelp.onclick = () => {
+hud.els.pauseHelp && (hud.els.pauseHelp.onclick = () => {
   clickSound();
   hud.els.pause.classList.add("hidden");
   hud.showHelp();
-};
+});
 hud.els.pauseRetry.onclick = () => {
   clickSound();
   restartLevel();
 };
 hud.els.pauseMenu.onclick = () => {
   clickSound();
+  trackRunStats();
   economy.noteFail();
   refreshHook();
   game.goMenu();
@@ -271,11 +309,27 @@ hud.els.hintHide.onclick = () => {
   hud.startTutorial("none");
 };
 
-hud.els.muteToggle.onchange = () => {
-  settings.muted = hud.els.muteToggle.checked;
+function portalMute() {
+  return muteAudioFromSearch(location.search) || !!window.BlobtidePlatform?.muteForced;
+}
+
+hud.els.muteToggle.onchange = () => applyMute(hud.els.muteToggle.checked);
+hud.els.muteBtn?.addEventListener("click", () => {
+  applyMute(!settings.muted);
+  if (!portalMute() && !settings.muted) game.sfx.ui();
+});
+hud.els.pauseMute?.addEventListener("click", () => applyMute(!settings.muted));
+function applyMute(muted) {
+  if (portalMute()) muted = true;
+  settings.muted = !!muted;
   SettingsStore.save(settings);
-  game.applyAudio(settings);
-};
+  game.applyAudio({ ...settings, muted: settings.muted || portalMute() });
+  hud.setMuted(settings.muted || portalMute());
+  if (!settings.muted && !portalMute()) {
+    game.sfx.ensure();
+    game.sfx.startMusic();
+  }
+}
 hud.els.musicVol?.addEventListener("input", () => {
   settings.music = Number(hud.els.musicVol.value) / 100;
   SettingsStore.save(settings);
@@ -319,6 +373,9 @@ function onSkin(skin) {
   if (economy.ownedSkins.includes(skin.id)) {
     economy.equip(skin.id);
     Analytics.event("skin_equipped", { skin: skin.id });
+  } else if (skin.starLock) {
+    hud.toast(skin.starLock === "prestige" ? "3★ on levels 1–10" : skin.starLock === "dusk" ? "2★ on level 8" : "1★ on level 5");
+    return;
   } else if (skin.iap) {
     iap.buyPrism().then((ok) => {
       if (!ok && !allowMockPurchases()) storeOnlyToast();
@@ -336,13 +393,27 @@ function onSkin(skin) {
   Analytics.event("skin_unlocked", { skin: skin.id });
 }
 
+function trackRunStats() {
+  economy.addPlayTime?.(game.runTime);
+  economy.noteCombo?.(Math.max(game.maxCombo || 0, game.maxComboAchieved || 0, game.lastWin?.maxCombo || 0));
+}
+
 function settleWinReward() {
   if (game.rewardSettled) return;
   game.rewardSettled = true;
+  trackRunStats();
   economy.addCoins(game.lastReward || 0);
-  if (game.lastWin) economy.recordLevelWin(game.levelIndex, game.lastWin);
+  let cosmetics = [];
+  if (game.lastWin) {
+    const rec = economy.recordLevelWin(game.levelIndex, game.lastWin);
+    cosmetics = rec?.cosmetics || [];
+  }
   economy.noteWin(game.lastWin?.stars || 1);
   hud.setCoins(economy.coins);
+  if (cosmetics.length) {
+    hud.toast(cosmetics.map((s) => s.name).join(" · ") + " unlocked");
+    hud.renderSkins(SKINS, economy, onSkin);
+  }
   refreshHook();
 }
 
@@ -367,6 +438,7 @@ hud.els.resultPrimary.onclick = async () => {
       await ads.maybeInterstitial(hud.tutorialMode !== "none");
       play({ countSession: false });
     } else {
+      trackRunStats();
       economy.noteFail();
       refreshHook();
       hud.hideResult();
@@ -384,6 +456,7 @@ hud.els.resultReplay.onclick = () => {
   const mode = hud.els.result.dataset.mode;
   if (mode === "win") settleWinReward();
   else {
+    trackRunStats();
     economy.noteFail();
     refreshHook();
   }
@@ -418,6 +491,7 @@ hud.els.resultMenu.onclick = () => {
     settleWinReward();
     economy.onWin(game.levelIndex);
   } else {
+    trackRunStats();
     economy.noteFail();
     refreshHook();
   }
@@ -432,13 +506,168 @@ if (window.Capacitor?.isNativePlatform?.()) {
     await iap.restore();
     hud.setCoins(economy.coins);
   });
+} else {
+  hud.els.iap?.classList.add("hidden");
+  hud.root.querySelector(".packs")?.classList.add("hidden");
 }
 
-installCrazyGamesPlatform().catch(() => {});
-game.tick();
+const sdkReady = installCrazyGamesPlatform().catch(() => false);
+sdkReady.finally(() => {
+  crazyGamesLoadingStop();
+  const p = window.BlobtidePlatform;
+  hud.allowRewarded = Platform.has("rewardedBreak") && p?.adsLive === true && !isCrazyGamesHost();
+  if (p) {
+    p.onMuteAudio = () => applyMute(settings.muted);
+    p.onAdStart = () => {
+      game._adLock = true;
+      game._adWasPaused = game.paused;
+      if (game.state === "playing" && !game.ended && !game.paused) game.togglePause();
+      game.sfx.setMuted(true);
+    };
+    p.onAdEnd = () => {
+      game._adLock = false;
+      applyMute(settings.muted);
+      if (!game._adWasPaused && game.paused && game.state === "playing" && !game.ended) game.togglePause();
+    };
+    if (p.muteForced) applyMute(true);
+  }
+});
+
+try {
+  game.tick();
+} catch (err) {
+  showBootError(err);
+}
+
+    const resumeAudio = () => {
+      game.sfx.ensure();
+      if (!game.sfx.muted) game.sfx.startMusic();
+    };
+document.addEventListener("touchend", resumeAudio, { passive: true });
+document.addEventListener("pointerdown", resumeAudio, { passive: true });
+
+window.addEventListener("keydown", (e) => {
+  if (e.repeat) return;
+  if (game.state !== "menu") return;
+  if (hud.els.menu?.classList.contains("hidden")) return;
+  if (e.key !== "Enter" && e.key !== " ") return;
+  if (e.target?.tagName === "INPUT" || e.target?.isContentEditable) return;
+  e.preventDefault();
+  clickSound();
+  play();
+});
 
 if (new URLSearchParams(location.search).has("capture")) {
   play();
+  if (new URLSearchParams(location.search).has("record")) {
+    game.setMuted(true);
+    const canvas = document.querySelector("#game");
+    const seconds = 16;
+    const stream = canvas.captureStream(30);
+    const mime = MediaRecorder.isTypeSupported("video/webm;codecs=vp9")
+      ? "video/webm;codecs=vp9"
+      : "video/webm";
+    const rec = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 6_000_000 });
+    const chunks = [];
+    rec.ondataavailable = (e) => {
+      if (e.data?.size) chunks.push(e.data);
+    };
+    rec.onstop = async () => {
+      const blob = new Blob(chunks, { type: mime });
+      try {
+        await fetch("/clip", { method: "POST", body: blob });
+        window.__blobtideRecorded = blob.size;
+      } catch (err) {
+        window.__blobtideRecorded = String(err?.message || err);
+      }
+    };
+    rec.start(500);
+    window.setTimeout(() => rec.stop(), seconds * 1000);
+  }
 }
 
 window.Blobtide = { game, economy, LEVELS, play, tutorial: () => tutorial };
+
+  if (import.meta.env.DEV && new URLSearchParams(location.search).get("qa") === "1") {
+    const bar = document.createElement("div");
+    bar.id = "qa-hopper";
+    bar.innerHTML = `<button type="button" id="qa-prev">Prev</button><span id="qa-id">1</span><button type="button" id="qa-next">Next</button><button type="button" id="qa-scan">Scan 1-56</button><div class="qa-log" id="qa-log"></div>`;
+    hudRoot.appendChild(bar);
+    const log = (msg) => {
+      const el = bar.querySelector("#qa-log");
+      el.textContent = msg;
+      console.info("[qa]", msg);
+    };
+    const syncQa = () => {
+      bar.querySelector("#qa-id").textContent = String((economy.levelIndex || 0) + 1);
+    };
+    const loadId = (id) => {
+      const n = Math.max(1, Math.min(56, id | 0));
+      economy.levelIndex = n - 1;
+      play({ countSession: false });
+      syncQa();
+    };
+    syncQa();
+    bar.querySelector("#qa-prev").onclick = () => loadId((economy.levelIndex || 0));
+    bar.querySelector("#qa-next").onclick = () => loadId((economy.levelIndex || 0) + 2);
+    bar.querySelector("#qa-scan").onclick = () => {
+      const errors = [];
+      for (const level of LEVELS) {
+        const world = worldForLevel(level.id);
+        if (!level.worldId || level.worldId !== world.id) errors.push(`L${level.id} world`);
+        if (!level.pieces.length || level.pieces.at(-1).type !== "finish") errors.push(`L${level.id} finish`);
+        const run = simulatePlay(level);
+        if (!run.ok) errors.push(`L${level.id} play ${run.at || "door"}`);
+        try {
+          game.applyWorld(world, level.id);
+          game.world.build(level);
+          game.crowd.reset(level.startCount);
+          game.crowd.applySkin("lime");
+          game.crowd.update(0.016, level.laneLimit || 3, { moving: false, camera: game.camera });
+          const eye = game.crowd.leader?.material?.map;
+          if (!game.crowd.leader || !eye) errors.push(`L${level.id} eyes`);
+        } catch (err) {
+          errors.push(`L${level.id} build ${err.message || err}`);
+        }
+      }
+      log(errors.length ? errors.join(" | ") : `OK ${LEVELS.length} levels, ${new Set(LEVELS.map((l) => l.worldId)).size} worlds`);
+      loadId((economy.levelIndex || 0) + 1);
+    };
+    window.__blobtideQa = { loadId, scan: () => bar.querySelector("#qa-scan").click() };
+    log("QA hopper ready");
+  }
+
+    return true;
+  } catch (err) {
+    window.__blobtideStarted = false;
+    showBootError(err);
+    return false;
+  }
+}
+
+window.addEventListener("error", (ev) => {
+  if (!window.__blobtideStarted) showBootError(ev.error || ev.message);
+});
+
+function scheduleBoot() {
+  try {
+    if (bootBlobtide()) return;
+  } catch (err) {
+    showBootError(err);
+    return;
+  }
+  const kick = () => {
+    try {
+      bootBlobtide();
+    } catch (err) {
+      showBootError(err);
+    }
+  };
+  document.addEventListener("DOMContentLoaded", kick);
+  window.addEventListener("load", kick);
+  let n = 0;
+  const id = setInterval(() => {
+    if (bootBlobtide() || ++n > 100) clearInterval(id);
+  }, 50);
+}
+scheduleBoot();

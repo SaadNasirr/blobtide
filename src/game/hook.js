@@ -37,9 +37,40 @@ export function nearMiss({ reason, crowd = 0, doorHp = 0 } = {}) {
   return { close: false, line: `Need ${hp}. You had ${n}.` };
 }
 
+/** Hound stays relative to run speed so fights and boosts stay skill-based. */
+export const CHASER = {
+  cruiseMul: 1.1,
+  huntMul: 1.3,
+  huntRange: 3,
+  escapeLead: 5,
+  emergeBack: 4.4,
+  biteBehind: -1.4,
+  biteAhead: 0.85,
+  biteX: 1.35,
+};
+
+export function chaserMul(chaserZ, playerZ) {
+  const cz = Number(chaserZ) || 0;
+  const pz = Number(playerZ) || 0;
+  if (pz - cz > CHASER.escapeLead) return 0;
+  if (cz - pz < CHASER.huntRange) return CHASER.huntMul;
+  return CHASER.cruiseMul;
+}
+
+export function chaserEmergeZ(playerZ) {
+  return (Number(playerZ) || 0) - CHASER.emergeBack;
+}
+
+/** Bite only when the worm overlaps the pack, not from far ahead on the lane. */
+export function chaserCanBite(chaserZ, playerZ, chaserX, playerX) {
+  const dz = (Number(chaserZ) || 0) - (Number(playerZ) || 0);
+  const dx = Math.abs((Number(chaserX) || 0) - (Number(playerX) || 0));
+  return dz > CHASER.biteBehind && dz < CHASER.biteAhead && dx < CHASER.biteX;
+}
+
 export function nextSkinGoal(ownedSkins, coins) {
   const owned = new Set(ownedSkins || []);
-  const next = SKINS.find((s) => !s.iap && s.price > 0 && !owned.has(s.id));
+  const next = SKINS.find((s) => !s.iap && !s.starLock && s.price > 0 && !owned.has(s.id));
   if (!next) return null;
   return {
     id: next.id,

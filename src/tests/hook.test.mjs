@@ -3,6 +3,10 @@ import test from "node:test";
 import {
   advanceDaily,
   applyMission,
+  CHASER,
+  chaserMul,
+  chaserCanBite,
+  chaserEmergeZ,
   nearMiss,
   nextSkinGoal,
   streakBonus,
@@ -49,4 +53,19 @@ test("next skin goal is the cheapest unowned cosmetic", () => {
 test("streak bonus scales and utc day is stable", () => {
   assert.equal(streakBonus(3), 12);
   assert.equal(utcDay(Date.parse("2026-09-25T23:00:00.000Z")), "2026-09-25");
+});
+
+test("hound speed stays relative to the player and gives up when you pull ahead", () => {
+  assert.equal(CHASER.cruiseMul, 1.1);
+  assert.equal(CHASER.huntMul, 1.3);
+  assert.equal(chaserMul(12, 0), 1.1);
+  assert.equal(chaserMul(2, 0), 1.3);
+  assert.equal(chaserMul(0, 6), 0);
+});
+
+test("hound only bites in melee overlap and erupts behind the pack", () => {
+  assert.equal(chaserEmergeZ(20), 20 - CHASER.emergeBack);
+  assert.equal(chaserCanBite(20, 20, 0, 0), true);
+  assert.equal(chaserCanBite(28, 20, 0, 0), false);
+  assert.equal(chaserCanBite(20, 20, 3, 0), false);
 });

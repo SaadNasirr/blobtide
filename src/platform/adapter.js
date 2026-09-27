@@ -18,7 +18,7 @@ export const Platform = {
   },
   async commercialBreak() {
     const shown = await call("commercialBreak");
-    return shown !== false;
+    return shown === true;
   },
   async rewardedBreak() {
     const ok = await call("rewardedBreak");

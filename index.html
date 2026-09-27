@@ -6,36 +6,54 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
     />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https://sdk.crazygames.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https: wss:; media-src 'self'; base-uri 'self'" />
-    <meta name="theme-color" content="#2b1f78" />
-    <meta name="description" content="Blobtide is a one-thumb crowd runner. Swerve glowing slime, hit x2 gates, smash the door. Free to play on web now, Android and iOS next." />
+    <meta name="theme-color" content="#142028" />
+    <meta name="description" content="Blobtide: grow a slime crowd, pick gates, smash sepoys." />
     <meta name="keywords" content="crowd runner, slime game, multiply gates, one thumb, hypercasual, swipe runner" />
     <meta name="author" content="Saad Nasir" />
     <meta name="robots" content="index,follow" />
     <link rel="canonical" href="https://saadnasirr.github.io/blobtide/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Blobtide — swerve, multiply, smash" />
-    <meta property="og:description" content="One-thumb crowd runner. Hit + and x gates, dodge red walls, smash the gold door." />
+    <meta property="og:title" content="Blobtide" />
+    <meta property="og:description" content="Steer a slime crowd. Green gates grow you. Reach the door bigger than the sepoys." />
     <meta property="og:url" content="https://saadnasirr.github.io/blobtide/" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Blobtide" />
-    <meta name="twitter:description" content="One-thumb crowd runner. Swerve, multiply, smash." />
+    <meta name="twitter:description" content="Steer slime. Pick gates. Smash the door." />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./favicon.svg" />
-    <title>Blobtide — One-thumb crowd runner</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Blobtide</title>
     <link rel="icon" href="./favicon.svg" />
-    <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+    <style>
+      @font-face{font-family:Nunito;font-style:normal;font-weight:800;font-display:swap;src:url("./fonts/nunito-800.woff2") format("woff2")}
+      html,body{margin:0;width:100%;height:100%;min-height:100%;overflow:hidden;background:#142028;font-family:"Nunito",system-ui,sans-serif}
+      #app,#game,#hud{position:absolute;inset:0;width:100%;height:100%}
+      #game{z-index:0;display:block}
+      #hud{z-index:20}
+      #boot-home{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:36px 24px;font-family:"Nunito",system-ui,sans-serif;color:#fff;background:linear-gradient(180deg,transparent 38%,#142028ee 86%);pointer-events:none}
+      #boot-home h1{margin:0;color:#fff;font-size:48px;font-weight:800;line-height:1.1;letter-spacing:-0.03em;text-shadow:0 4px 18px rgba(46,200,212,0.35)}
+      #boot-home p{color:#c8d4dc;font-weight:700;font-size:16px}
+    </style>
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
-  <body style="margin:0;background:#1a1458">
+  <body>
     <div id="app">
       <canvas id="game"></canvas>
-      <div id="hud"></div>
+      <div id="hud">
+        <div id="boot-home">
+          <h1>BLOBTIDE</h1>
+          <p>Loading…</p>
+        </div>
+      </div>
     </div>
+    <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+    <script>
+      try {
+        var cg = window.CrazyGames && window.CrazyGames.SDK && window.CrazyGames.SDK.game;
+        if (cg && cg.loadingStart) cg.loadingStart();
+      } catch (e) {}
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

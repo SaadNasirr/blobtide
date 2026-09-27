@@ -1,6 +1,6 @@
-import { SKINS } from "../content/skins.js";
+import { SKINS, starSkinsDue, getSkin } from "../content/skins.js";
 import { CONFIG } from "../config.js";
-import { mergeLevelStat, sanitizeStats, starRating } from "./progress.js";
+import { mergeLevelStat, sanitizeStats, starRating, readLevelStars, writeLevelStars, writeCampaignProgress, readCampaignProgress } from "./progress.js";
 import { readJson, writeJson } from "./storage.js";
 import { advanceDaily, applyMission, MISSIONS, nextSkinGoal, streakBonus } from "./hook.js";
 
@@ -49,6 +49,8 @@ export function sanitizeSave(raw, lastIndex = LAST_LEVEL_INDEX) {
     lastPlayDay: /^\d{4}-\d{2}-\d{2}$/.test(data.lastPlayDay) ? data.lastPlayDay : "",
     missionIndex: clampInt(data.missionIndex, 0, MISSIONS.length - 1),
     missionProgress: clampInt(data.missionProgress, 0, 9999),
+    bestCombo: clampInt(data.bestCombo, 0, 999),
+    playMs: clampInt(data.playMs, 0, 1e12),
   };
 }
 
@@ -68,27 +70,58 @@ export const Economy = {
   lastPlayDay: "",
   missionIndex: 0,
   missionProgress: 0,
+  bestCombo: 0,
+  playMs: 0,
 
   load() {
     const parsed = readJson(PREFIX + "save", null);
-    if (!parsed || typeof parsed !== "object") return this;
-    Object.assign(this, sanitizeSave(parsed));
+    if (parsed && typeof parsed === "object") Object.assign(this, sanitizeSave(parsed));
+    this._syncLevelStars();
+    this._syncCampaignFile();
+    this.grantStarCosmetics();
     return this;
+  },
+
+  _syncLevelStars() {
+    for (let i = 0; i <= LAST_LEVEL_INDEX; i++) {
+      const saved = readLevelStars(i + 1);
+      if (saved <= 0) continue;
+      this.stats[i] = mergeLevelStat(this.stats[i], { completed: true, stars: saved });
+    }
+  },
+
+  _syncCampaignFile() {
+    const file = readCampaignProgress();
+    if (!file || typeof file !== "object") return;
+    this.bestCombo = Math.max(this.bestCombo | 0, file.bestCombo | 0);
+    this.bestStreak = Math.max(this.bestStreak | 0, file.bestStreak | 0);
+    this.playMs = Math.max(this.playMs | 0, file.playMs | 0);
+    if (file.maxUnlocked != null) this.maxUnlocked = Math.max(this.maxUnlocked | 0, file.maxUnlocked | 0);
+    const by = file.byLevel && typeof file.byLevel === "object" ? file.byLevel : {};
+    for (let id = 1; id <= LAST_LEVEL_INDEX + 1; id++) {
+      const n = Math.max(0, Math.min(3, by[id] | by[String(id)] | 0));
+      if (n <= 0) continue;
+      this.stats[id - 1] = mergeLevelStat(this.stats[id - 1], { completed: true, stars: n });
+      writeLevelStars(id, n);
+    }
   },
 
   save() {
     const clean = sanitizeSave(this);
     Object.assign(this, clean);
     writeJson(PREFIX + "save", clean);
+    writeCampaignProgress(this);
   },
 
   addCoins(n) {
-    this.coins = Math.min(CONFIG.maxCoins, this.coins + Math.max(0, Math.floor(n)));
+    const delta = Math.floor(Number(n) || 0);
+    this.coins = Math.min(CONFIG.maxCoins, Math.max(0, this.coins + delta));
     this.save();
   },
 
   buySkin(id, price) {
-    if (!SKIN_IDS.has(id) || id === "rainbow") return false;
+    const skin = SKINS.find((s) => s.id === id);
+    if (!skin || skin.iap || skin.starLock) return false;
     if (this.ownedSkins.includes(id)) return true;
     if (this.coins < price) return false;
     this.coins -= price;
@@ -105,17 +138,32 @@ export const Economy = {
     return true;
   },
 
-  recordLevelWin(levelIndex, { coins = 0, crowd = 0, leftover = 0, doorHp = 1 } = {}) {
-    const stars = starRating({ leftover, doorHp });
+  recordLevelWin(levelIndex, { coins = 0, crowd = 0, leftover = 0, doorHp = 1, stars, levelId } = {}) {
     const key = Math.max(0, Math.floor(levelIndex));
+    const id = Math.max(1, Math.floor(Number(levelId) || key + 1));
+    const earned = Math.max(0, Math.min(3, stars != null ? stars | 0 : starRating({ won: true, hazardHitCount: 0, maxCombo: 0 })));
+    const best = writeLevelStars(id, earned);
     this.stats[key] = mergeLevelStat(this.stats[key], {
       completed: true,
-      stars,
+      stars: best,
       bestCoins: Math.max(0, Math.floor(coins)),
       bestCrowd: Math.max(0, Math.floor(crowd)),
     });
     this.save();
-    return { stars, best: this.stats[key] };
+    const cosmetics = this.grantStarCosmetics();
+    return { stars: earned, best: this.stats[key], cosmetics };
+  },
+
+  grantStarCosmetics() {
+    const due = starSkinsDue(this.stats);
+    const fresh = [];
+    for (const id of due) {
+      if (!SKIN_IDS.has(id) || this.ownedSkins.includes(id)) continue;
+      this.ownedSkins.push(id);
+      fresh.push(getSkin(id));
+    }
+    if (fresh.length) this.save();
+    return fresh;
   },
 
   isUnlocked(index) {
@@ -159,6 +207,21 @@ export const Economy = {
     if (stars >= 3) this.pushMission("stars", 1);
     this.save();
     return streakBonus(this.winStreak);
+  },
+
+  noteCombo(n) {
+    const v = Math.max(0, n | 0);
+    if (v > (this.bestCombo | 0)) {
+      this.bestCombo = v;
+      this.save();
+    }
+  },
+
+  addPlayTime(seconds) {
+    const ms = Math.max(0, Math.floor((Number(seconds) || 0) * 1000));
+    if (!ms) return;
+    this.playMs = Math.min(1e12, (this.playMs | 0) + ms);
+    this.save();
   },
 
   noteFail() {
